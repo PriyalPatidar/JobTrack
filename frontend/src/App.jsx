@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { BriefcaseBusiness, CalendarDays, ChartNoAxesCombined, CirclePlus, Search, Trash2, RefreshCw } from "lucide-react";
 
-const API = "http://127.0.0.1:8000";
+const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 const statuses = ["Applied", "Assessment", "Interview", "Offer", "Rejected"];
 const emptyForm = { company: "", role: "", status: "Applied", applied_date: new Date().toISOString().slice(0, 10), deadline: "", interview_date: "", job_url: "", notes: "" };
 
