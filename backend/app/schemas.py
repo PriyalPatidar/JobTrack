@@ -1,8 +1,17 @@
+
 from datetime import date, datetime
 from typing import Literal
-from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
-ApplicationStatus = Literal["Applied", "Assessment", "Interview", "Offer", "Rejected"]
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+
+ApplicationStatus = Literal[
+    "Applied",
+    "Assessment",
+    "Interview",
+    "Offer",
+    "Rejected",
+]
 
 
 class ApplicationCreate(BaseModel):
@@ -15,6 +24,16 @@ class ApplicationCreate(BaseModel):
     job_url: str | None = Field(default=None, max_length=500)
     notes: str | None = None
 
+    @field_validator("company", "role")
+    @classmethod
+    def validate_text(cls, value: str) -> str:
+        value = value.strip()
+
+        if not value:
+            raise ValueError("This field cannot be empty")
+
+        return value
+
 
 class ApplicationUpdate(BaseModel):
     company: str | None = Field(default=None, min_length=1, max_length=120)
@@ -25,6 +44,19 @@ class ApplicationUpdate(BaseModel):
     interview_date: date | None = None
     job_url: str | None = Field(default=None, max_length=500)
     notes: str | None = None
+
+    @field_validator("company", "role")
+    @classmethod
+    def validate_text(cls, value: str | None) -> str | None:
+        if value is None:
+            return value
+
+        value = value.strip()
+
+        if not value:
+            raise ValueError("This field cannot be empty")
+
+        return value
 
 
 class ApplicationOut(BaseModel):
