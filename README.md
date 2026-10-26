@@ -1,119 +1,126 @@
-# JobTrack — Smart Job Application Tracker
+# JobTrack — Job Application Tracker
 
-A beginner-friendly full-stack starter project for tracking job applications.
+JobTrack is a web application that helps users manage and track their job applications in one place.
 
-## Tech stack
-- Frontend: React + Vite
-- Backend: Python + FastAPI
-- Database: PostgreSQL
-- Local database: Docker Compose (optional)
-- Git/GitHub: version control
+## Features
 
-## Features in this starter
-- Dashboard counts: total applications, interviews, offers
-- Add and list job applications
-- Update application status
-- Delete an application
-- Search/filter by company and status
-- PostgreSQL persistence (or SQLite fallback for easy first run)
+- User registration and login
+- JWT-based authentication
+- Add, view, update, and delete job applications
+- Track application statuses such as Applied and Interview
+- Dashboard showing application statistics
+- Store and manage application deadlines
+- Protected API endpoints
 
-## Project structure
+## Tech Stack
+
+**Frontend**
+- React
+- Vite
+- JavaScript
+- CSS
+
+**Backend**
+- Python
+- FastAPI
+- SQLAlchemy
+- JWT authentication
+- Password hashing
+
+**Database**
+- SQLite
+
+## Project Structure
+
 ```text
 JobTrack/
 ├── backend/
 │   ├── app/
-│   │   ├── __init__.py
-│   │   ├── database.py
 │   │   ├── main.py
 │   │   ├── models.py
-│   │   └── schemas.py
-│   ├── .env.example
+│   │   ├── schemas.py
+│   │   ├── database.py
+│   │   ├── auth.py
+│   │   ├── auth_routes.py
+│   │   └── auth_schemas.py
 │   └── requirements.txt
-├── frontend/
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js
-│   └── src/
-│       ├── App.jsx
-│       ├── main.jsx
-│       └── style.css
-├── docker-compose.yml
-└── .gitignore
+└── frontend/
+    ├── src/
+    │   ├── App.jsx
+    │   └── Auth.jsx
+    └── package.json
 ```
 
-## Before starting
-Install:
-1. Python 3.11 or newer
-2. Node.js LTS (includes npm)
-3. VS Code
-4. Git
-5. Docker Desktop only if you want PostgreSQL via Docker
+## Getting Started
 
-Check in VS Code terminal:
+### 1. Clone the repository
+
 ```bash
-python --version
-node --version
-npm --version
-git --version
+git clone https://github.com/PriyalPatidar/JobTrack.git
+cd JobTrack
 ```
 
-## Run the backend (easy first run with SQLite)
-Open a terminal in the `backend` folder:
-```bash
-python -m venv .venv
-```
-Windows PowerShell:
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-If PowerShell blocks activation, use Command Prompt and run:
-```bat
-.venv\Scripts\activate.bat
-```
-Then:
-```bash
-pip install -r requirements.txt
-```
-Copy `.env.example` to `.env` if you want to configure settings. The default uses a local SQLite file, so you do not need Docker for the first run.
-```bash
-uvicorn app.main:app --reload
-```
-Open:
-- API docs: http://127.0.0.1:8000/docs
-- API health: http://127.0.0.1:8000/
+### 2. Set up the backend
 
-## Run the frontend
-Open a second terminal in the `frontend` folder:
+Create and activate a Python virtual environment inside the `backend` folder.
+
+Install dependencies:
+
 ```bash
+python -m pip install -r requirements.txt
+```
+
+Set a secure `JWT_SECRET_KEY` environment variable before starting the backend. Keep the secret private and never commit it to GitHub.
+
+Start the backend from the project root:
+
+```bash
+cd backend
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8001
+```
+
+Open the API documentation at:
+
+http://127.0.0.1:8001/docs
+
+### 3. Set up the frontend
+
+Open another terminal:
+
+```bash
+cd frontend
 npm install
 npm run dev
 ```
-Open the local URL printed by Vite, usually http://localhost:5173.
 
-## Use PostgreSQL (optional)
-Start Docker Desktop, then from the project root:
-```bash
-docker compose up -d
-```
-Set `DATABASE_URL` in `backend/.env` to:
-```env
-DATABASE_URL=postgresql+psycopg://jobtrack:jobtrack_dev_password@localhost:5432/jobtrack
-```
-Restart the backend. For local learning, the default SQLite setup is simpler. Do not use the sample password in a public deployment.
+Open the local frontend URL shown in the terminal.
 
-## API endpoints
-- `GET /` — health check
-- `GET /applications` — list applications; optional `q` and `status` filters
-- `GET /dashboard` — dashboard summary counts
-- `POST /applications` — create an application
-- `PATCH /applications/{id}` — update an application's fields/status
-- `DELETE /applications/{id}` — delete an application
+## How It Works
 
-## First milestone
-1. Start the backend.
-2. Open `/docs` and add a sample application.
-3. Start the frontend and verify it appears in the list.
-4. Then customize the UI and add reminders, login, tests, and deployment.
+1. Users register and log in to their accounts.
+2. The frontend sends API requests to the FastAPI backend.
+3. The backend validates authentication and processes requests.
+4. Application information is stored in the database.
+5. The dashboard displays application information and statistics.
 
-## Important
-This is a starter scaffold, not a production-ready system. Authentication, authorization, migrations, automated tests, and production deployment hardening are not included yet. We will add those step by step.
+## Learning Outcomes
+
+- Building a frontend with React
+- Creating REST APIs using FastAPI
+- Implementing authentication and password hashing
+- Working with a relational database
+- Connecting frontend and backend
+- Using Git and GitHub for version control
+
+## Future Improvements
+
+- Application status charts and analytics
+- Improved deadline reminders
+- Advanced filtering and sorting
+- Deployment to a hosting platform
+
+## Author
+
+**Priyal Patidar**
+
+GitHub: https://github.com/PriyalPatidar
